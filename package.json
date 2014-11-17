@@ -1,0 +1,19 @@
+{
+  "name": "forrest_api",
+  "version": "1.0.0",
+  "description": "Context based bookmarking.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "bookmarking"
+  ],
+  "author": "Anand mohan sinha and nimit jain",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.10.2",
+    "body-parser": "*",
+    "mongoskin": "*"
+  }
+}
