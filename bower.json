@@ -1,0 +1,25 @@
+{
+  "name": "Indori",
+  "version": "0.0.0",
+  "authors": [
+    "ananduee <anandms91@gmail.com>"
+  ],
+  "description": "sankd",
+  "main": "kads",
+  "keywords": [
+    "dksa"
+  ],
+  "dependencies": {
+      "bootstrap": "~3.3.0"
+  },
+  "license": "MIT",
+  "homepage": "dsa",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

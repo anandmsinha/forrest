@@ -1,0 +1,24 @@
+@font-face {
+  font-family: 'PT Sans';
+  font-style: normal;
+  font-weight: 400;
+  /* IE6-8 compat */
+  src: url("ptsans-6df2f334fb2b9acf6d1f4f82f47c8386cd29d776.eot");
+  src: local("PT Sans"), 
+    local("PTSans-Regular"), 
+    url("ptsans-6df2f334fb2b9acf6d1f4f82f47c8386cd29d776.eot") format("embedded-opentype"), 
+    url("ptsans-0f7b417a41926f14acf6ba5d9f6db8356bf27717.svg#PTSans") format("svg"), 
+    url("ptsans-ebbf169ccfd88d351f98833f5d81d6cd3ffa884a.ttf") format("truetype"), 
+    url("ptsans-a0c248cade0ab7ddf8487badc3f56b63b3efd52a.woff") format("woff");
+}
+
+@font-face {
+  font-family: 'PT Sans';
+  font-style: normal;
+  font-weight: 700;
+  src: local("PT Sans Bold"), 
+    local("PTSans-Bold"), 
+    url("ptsans-56d3cf44605ce6e54d642274ca1a50b36189f5aa.ttf") format("truetype"), 
+    url("ptsans-8df8d0662fb0d9beb47aaa898c0e0a9ab1a28c6d.woff") format("woff");
+}
+

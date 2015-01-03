@@ -1,0 +1,26 @@
+doctype html
+html(lang="en")
+    head
+        title= "Login"
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        link(rel='stylesheet', href='/css/bootstrap.min.css')
+        style(type='text/css').
+            body {
+                padding-top: 10px;
+            }
+    body
+        div(class='container-fluid')
+            div(class='row')
+                div(class='col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4')
+                    form(role='form', method='post', action= form_url)
+                        input(type='hidden', name='redirect_uri', value= redirect_uri)
+                        input(type='hidden', name='response_type', value= response_type)
+                        input(type='hidden', name='client_id', value= client_id)
+                        legend Login to forrest
+                        div(class='form-group')
+                            label(for='username') Username
+                            input(type='text', class='form-control', id='username', name='username', placeholder='Username')
+                        div(class='form-group')
+                            label(for='password') Password
+                            input(type='password', class='form-control', id='password', name='password', placeholder='Password')
+                        button(type='submit', class='btn btn-success') Login
