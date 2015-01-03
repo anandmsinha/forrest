@@ -1,0 +1,120 @@
+doctype html
+html(lang="en", ng-app="mainForrestApp")
+    head
+        title= "Welcome to forrest"
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(charset="utf-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1")
+        link(rel='stylesheet', href='/css/web.css')
+        link(rel='stylesheet', href='/css/loading-bar.min.css')
+        link(rel='stylesheet', href='/css/fonts.css')
+        script(type='text/javascript', src='/js/angular.min.js')
+        script(type='text/javascript', src='/js/ngRoute.min.js')
+        script(type='text/javascript', src='/js/loading-bar.min.js')
+        script(type='text/javascript', src='/js/web.js')
+        <!--[if lt IE 9]>
+        script(type='text/javascript', src='https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js')
+        script(type='text/javascript', src='https://oss.maxcdn.com/respond/1.4.2/respond.min.js')
+        <![endif]-->
+    body(class="blue__wrap")
+        <base href="/">
+        nav(class="navbar navbar-default navbar-forrest navbar-static-top", ng-controller="NavBarController", ng-init="initUser('#{user}')")
+            div(class="container-fluid")
+                button(type="button", class="navbar-toggle collapsed", data-toggle="collapse", data-target="#main_navbar_collapse")
+                    span(class="sr-only") Toggle navigation
+                    span(class="icon-bar")
+                    span(class="icon-bar")
+                    span(class="icon-bar")
+                a(class='navbar-brand', ng-href='#/') Forrest
+                div(class="collapse navbar-collapse", id="main_navbar_collapse")
+                    ul(class="nav navbar-nav navbar-right", ng-if="!user.is_login")
+                        li
+                            a(href="#/register") Signup
+                        li
+                            a(ng-href="#/login") Login
+                    ul(class="nav navbar-nav navbar-right", ng-if="user.is_login")
+                        li
+                            a(ng-click="changeToQuestMode()", style="cursor: pointer;") Create Quest
+                        li
+                            a(href="#/logout") Logout
+        <div ng-view></div>
+
+        //- Template block
+        script(type="text/ng-template", id="/root.html")
+            div(class="container-fluid")
+                div(class="row")
+                    div(class="jumbotron")
+                        h1 Bookmarking 3.0
+                        p Forrest is collection of ideas and inspirations that you daily go through while browsing the web. We help you store those ideas and inspirations to retrive them fast.
+        //- Register Template
+        script(type="text/ng-template", id="/register.html")
+            div(class="container-fluid")
+                div(class="row")
+                    div(class="col-sm-6 col-sm-offset-3 form__block content__margin")
+                        form(novalidate, name="htmlRegisterForm", ng-submit="submitForm()")
+                            div(class="form-group", ng-class="{'has-error': htmlRegisterForm.username.$invalid && (htmlRegisterForm.username.$dirty || formSubmitted)}")
+                                label(class="control-label") Username
+                                input(type="text", name="username", ng-model="registerForm.username", class="form-control", placeholder="Enter your username", ng-required="true", ng-minlength="3", ng-maxlength="8")
+                                span(class="help-block text-error", ng-show=" htmlRegisterForm.username.$invalid && (htmlRegisterForm.username.$dirty || formSubmitted)") Username should have between 3 to 8 characters
+                            div(class="form-group", ng-class="{'has-error': htmlRegisterForm.password.$invalid && (htmlRegisterForm.password.$dirty || formSubmitted)}")
+                                label(class="control-label") Password
+                                input(type="password", name="password", ng-model="registerForm.password", class="form-control", placeholder="Enter password", ng-required="true", ng-minlength="6", ng-maxlength="16")
+                                span(class="help-block text-error", ng-show="htmlRegisterForm.password.$invalid && (htmlRegisterForm.password.$dirty || formSubmitted)") Password should have between 6 to 16 characters
+                            button(type="submit", class="btn btn-primary", ng-disabled="htmlRegisterForm.$invalid") Register
+
+        //- Login template
+        script(type="text/ng-template", id="/login.html")
+            div(class="container-fluid")
+                div(class="row")
+                    div(class="col-sm-6 col-sm-offset-3 form__block content__margin")
+                        form(novalidate, name="htmlLoginForm", ng-submit="submitForm()")
+                            div(class="form-group", ng-class="{'has-error': htmlLoginForm.username.$invalid && (htmlLoginForm.username.$dirty || formSubmitted)}")
+                                label(class="control-label") Username
+                                input(type="text", name="username", ng-model="loginForm.username", class="form-control", placeholder="Enter your username", ng-required="true", ng-minlength="3", ng-maxlength="8")
+                                span(class="help-block text-error", ng-show=" htmlLoginForm.username.$invalid && (htmlLoginForm.username.$dirty || formSubmitted)") Username should have between 3 to 8 characters
+                            div(class="form-group", ng-class="{'has-error': htmlLoginForm.password.$invalid && (htmlLoginForm.password.$dirty || formSubmitted)}")
+                                label(class="control-label") Password
+                                input(type="password", name="password", ng-model="loginForm.password", class="form-control", placeholder="Enter password", ng-required="true", ng-minlength="6", ng-maxlength="16")
+                                span(class="help-block text-error", ng-show="htmlLoginForm.password.$invalid && (htmlLoginForm.password.$dirty || formSubmitted)") Password should have between 6 to 16 characters
+                            button(type="submit", class="btn btn-primary", ng-disabled="htmlLoginForm.$invalid") Login
+        //- User Board
+        script(type="text/ng-template", id="/board.html")
+            div(class="container-fluid content__margin")
+                div(class="row")
+                    div(class="col-md-2")
+                        div(class="main__control__block")
+                            div(class="cb__label")
+                                p All Quests ({{ quests.length }})
+                            a(ng-click="changeQuest($index)", class="cb__quest", style="cursor: pointer;", ng-repeat="quest in quests") {{ quest.name }}
+                    div(class="col-md-10")
+                        div(class="main__qu_block")
+                            div(ng-if="appModes.createQuest")
+                                button(class="btn btn-link", ng-click="appModes.createQuest = false") Back
+                                form(class="form-inline", novalidate, name="createQuestHtmlForm", style="margin-top: 20px;" ng-submit="createQuest()")
+                                    div(class="form-group")
+                                        label(class="sr-only") Quest name
+                                        input(type="text", class="form-control", name="quest", ng-required="true", ng-model="createQuestForm.quest", ng-minlength="1")
+                                    button(type="submit", class="btn btn-primary", style="margin-left: 5px;", ng-disabled="createQuestHtmlForm.$invalid") Create
+                            div(ng-if="!appModes.createQuest")
+                                div(ng-if="quests.length == 0")
+                                    p
+                                     | You don't have any quest
+                                     button(ng-click="appModes.createQuest = true", class="btn btn-link") Create a quest now.
+                                div(ng-if="quests.length != 0")
+                                    h3 {{ questObject.name }} - {{ questObject.links_count }} links
+                                    div(class="add__link")
+                                        form(class="add__link--form", name="addLinkHtmlForm", id="addLinkHtmlForm", novalidate, ng-submit="addLinkHtmlForm.$valid && createLink(addLinkHtmlForm)")
+                                            input(type="text", placeholder="Add a new link", name="newLink", class="add__link--form--input", ng-required="true", url-text, ng-model="addLinkForm.link")
+                                            p(ng-show="addLinkHtmlForm.$invalid && addLinkHtmlForm.newLink.$dirty", class="text-danger") A valid link must be provided
+                                    div(class="quest__links")
+                                        div(class="quest__links--link" ng-repeat="link in questObject.links | reverse")
+                                            div(class="quest__links--link--title")
+                                                a(href="#") {{ link.link }}
+                                                small &nbsp; Added on {{ link.created_at | dateandtime }}
+                                            div
+                                                ul(class="list-inline")
+                                                    li( ng-repeat="tag in link.tags")
+                                                        span(class="label label-default") {{ tag }}
+                                                p(class="quest__links--description", ng-if="link.description") {{ link.description }}
+
+

@@ -1,0 +1,4 @@
+{
+  "verbose": true,
+  "ignore": ["node_modules/*", "public/*", "bower_components/*", "views/*", "tests.js", "gulpfile.js"]
+}
