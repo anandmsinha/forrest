@@ -35,6 +35,17 @@
     };
   });
 
+  app.filter('removehash', function() {
+    return function(input) {
+      var regexp;
+      if (input && input.length > 0) {
+        regexp = new RegExp('#([^\\s]*)', 'g');
+        return input.replace(regexp, '');
+      }
+      return '';
+    };
+  });
+
   app.factory('$appModes', function() {
     var modes;
     modes = {
@@ -237,10 +248,34 @@
       $scope.quests = $questService.getQuests();
       $scope.defaultQuest = 0;
       $scope.questObject = {};
+      $scope.linksDataStructure = {};
       firstSet = false;
       $scope.$watchCollection("quests", function(newval, oldval) {
         if (newval.length > 0 && !firstSet) {
           return $scope.changeQuest(0);
+        }
+      });
+      $scope.$watch("questObject", function(newval, oldval) {
+        var link, tmpVal, _i, _len, _ref;
+        if (newval && newval.links) {
+          tmpVal = {
+            untagged: []
+          };
+          _ref = newval.links;
+          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+            link = _ref[_i];
+            if (link.tags && link.tags.length !== 0) {
+              if (!tmpVal[link.tags[0]]) {
+                tmpVal[link.tags[0]] = [];
+              }
+              tmpVal[link.tags[0]].push(link);
+            } else {
+              tmpVal.untagged.push(link);
+            }
+          }
+          return $scope.linksDataStructure = tmpVal;
+        } else {
+          return $scope.linksDataStructure = {};
         }
       });
       $scope.appModes = $appModes.getModes();
