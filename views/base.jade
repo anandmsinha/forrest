@@ -107,14 +107,11 @@ html(lang="en", ng-app="mainForrestApp")
                                             input(type="text", placeholder="Add a new link", name="newLink", class="add__link--form--input", ng-required="true", url-text, ng-model="addLinkForm.link")
                                             p(ng-show="addLinkHtmlForm.$invalid && addLinkHtmlForm.newLink.$dirty", class="text-danger") A valid link must be provided
                                     div(class="quest__links")
-                                        div(class="quest__links--link" ng-repeat="link in questObject.links | reverse")
-                                            div(class="quest__links--link--title")
-                                                a(href="#") {{ link.link }}
-                                                small &nbsp; Added on {{ link.created_at | dateandtime }}
-                                            div
-                                                ul(class="list-inline")
-                                                    li( ng-repeat="tag in link.tags")
-                                                        span(class="label label-default") {{ tag }}
-                                                p(class="quest__links--description", ng-if="link.description") {{ link.description }}
-
+                                        ul
+                                            li(ng-repeat="(key, value) in linksDataStructure")
+                                                p(class="quest__links--tag") {{ key }} :
+                                                ul(class="quest__links--sublist")
+                                                    li(ng-repeat="link in value")
+                                                        p {{ link.description | removehash }}
+                                                        a(ng-href="{{ link.link }}", target="_blank") {{ link.link }}
 
