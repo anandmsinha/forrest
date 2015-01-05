@@ -7,11 +7,11 @@ var gulp = require('gulp'),
     gutil = require('gulp-util'),
     csso = require('gulp-csso'),
     coffee = require('gulp-coffee'),
-    uglify = require('gulp-uglify')
+    uglify = require('gulp-uglify'),
+    concat = require('gulp-concat')
 
 gulp.task('css', function() {
     return gulp.src('bower_components/less/web.less')
-        .pipe(watch())
         .pipe(less())
         .pipe(prefix(
             'Android 2.3',
@@ -31,12 +31,24 @@ gulp.task('css', function() {
 
 gulp.task('javascript', function() {
     return gulp.src('bower_components/coffee/web.coffee')
-        .pipe(watch())
         .pipe(coffee())
         .on('error', gutil.log)
         .pipe(gulp.dest('public/js'))
 })
 
+gulp.task('minify', function() {
+    return gulp.src(['public/js/ngRoute.min.js' ,'public/js/loading-bar.min.js', 'public/js/mentio.min.js', 'public/js/web.js'])
+        .pipe(concat('web.min.js'))
+        .pipe(uglify())
+        .on('error', gutil.log)
+        .pipe(gulp.dest('public/js/'))
+})
+
+gulp.task('watcher', function() {
+    gulp.watch('bower_components/coffee/web.coffee', ['javascript', 'minify'])
+    gulp.watch('bower_components/less/web.less', ['css'])
+})
+
 gulp.task('default', function() {
-    gulp.start('css', 'javascript')
+    gulp.start('css', 'javascript', 'minify', 'watcher')
 })
