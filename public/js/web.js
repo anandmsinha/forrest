@@ -1,7 +1,7 @@
 (function() {
   var app;
 
-  app = angular.module('mainForrestApp', ['ngRoute', 'angular-loading-bar']);
+  app = angular.module('mainForrestApp', ['ngRoute', 'angular-loading-bar', 'mentio']);
 
   app.directive('urlText', function() {
     var output;
@@ -249,6 +249,7 @@
       $scope.defaultQuest = 0;
       $scope.questObject = {};
       $scope.linksDataStructure = {};
+      $scope.allTags = [];
       firstSet = false;
       $scope.$watchCollection("quests", function(newval, oldval) {
         if (newval.length > 0 && !firstSet) {
@@ -257,6 +258,9 @@
       });
       $scope.$watch("questObject", function(newval, oldval) {
         var link, tmpVal, _i, _len, _ref;
+        while ($scope.allTags.length > 0) {
+          $scope.allTags.pop();
+        }
         if (newval && newval.links) {
           tmpVal = {
             untagged: []
@@ -265,6 +269,9 @@
           for (_i = 0, _len = _ref.length; _i < _len; _i++) {
             link = _ref[_i];
             if (link.tags && link.tags.length !== 0) {
+              $scope.allTags.push({
+                label: link.tags[0]
+              });
               if (!tmpVal[link.tags[0]]) {
                 tmpVal[link.tags[0]] = [];
               }
