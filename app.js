@@ -73,6 +73,7 @@ var isAuthenticated = function(req, res, next) {
 }
 
 app.get('/', Root.GET)
+app.get('/test', function(req, res, next) { res.render('test') })
 app.post('/login', parsers.json, function(req, res, next) { Login.POST(req, res, next, passport) })
 app.post('/logout', Logout.POST)
 app.get('/oauth', routeOAuth.GET)
