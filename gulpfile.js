@@ -13,18 +13,6 @@ var gulp = require('gulp'),
 gulp.task('css', function() {
     return gulp.src('bower_components/less/web.less')
         .pipe(less())
-        .pipe(prefix(
-            'Android 2.3',
-            'Android >= 4',
-            'Chrome >= 20',
-            'Firefox >= 24', // Firefox 24 is the latest ESR
-            'Explorer >= 8',
-            'iOS >= 6',
-            'Opera >= 12',
-            'Safari >= 6'
-        ))
-        .pipe(minifyCSS())
-        .pipe(csso())
         .on('error', gutil.log)
         .pipe(gulp.dest('public/css/'))
 })
@@ -44,11 +32,30 @@ gulp.task('minify', function() {
         .pipe(gulp.dest('public/js/'))
 })
 
+gulp.task('cssjoin', function() {
+    return gulp.src(['public/css/web.css', 'public/css/loading-bar.min.css', 'public/css/fonts.css'])
+        .pipe(concat('web.min.css'))
+        .pipe(prefix(
+            'Android 2.3',
+            'Android >= 4',
+            'Chrome >= 20',
+            'Firefox >= 24', // Firefox 24 is the latest ESR
+            'Explorer >= 8',
+            'iOS >= 6',
+            'Opera >= 12',
+            'Safari >= 6'
+        ))
+        .pipe(minifyCSS())
+        .pipe(csso())
+        .on('error', gutil.log)
+        .pipe(gulp.dest('public/css/'))
+})
+
 gulp.task('watcher', function() {
     gulp.watch('bower_components/coffee/web.coffee', ['javascript', 'minify'])
-    gulp.watch('bower_components/less/web.less', ['css'])
+    gulp.watch('bower_components/less/web.less', ['css', 'cssjoin'])
 })
 
 gulp.task('default', function() {
-    gulp.start('css', 'javascript', 'minify', 'watcher')
+    gulp.start('css', 'javascript', 'minify', 'watcher', 'cssjoin')
 })

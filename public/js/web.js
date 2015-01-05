@@ -257,7 +257,7 @@
         }
       });
       $scope.$watch("questObject", function(newval, oldval) {
-        var link, tmpVal, _i, _len, _ref;
+        var k, link, tmpVal, _i, _len, _ref;
         while ($scope.allTags.length > 0) {
           $scope.allTags.pop();
         }
@@ -269,9 +269,6 @@
           for (_i = 0, _len = _ref.length; _i < _len; _i++) {
             link = _ref[_i];
             if (link.tags && link.tags.length !== 0) {
-              $scope.allTags.push({
-                label: link.tags[0]
-              });
               if (!tmpVal[link.tags[0]]) {
                 tmpVal[link.tags[0]] = [];
               }
@@ -280,9 +277,14 @@
               tmpVal.untagged.push(link);
             }
           }
-          return $scope.linksDataStructure = tmpVal;
+          for (k in tmpVal) {
+            $scope.allTags.push({
+              label: k
+            });
+          }
+          $scope.linksDataStructure = tmpVal;
         } else {
-          return $scope.linksDataStructure = {};
+          $scope.linksDataStructure = {};
         }
       });
       $scope.appModes = $appModes.getModes();
