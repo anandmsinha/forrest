@@ -43,6 +43,7 @@
     "gulp-util": "*",
     "gulp-watch": "^0.7.0",
     "gulp-coffee": "*",
-    "gulp-uglify": "*"
+    "gulp-uglify": "*",
+    "gulp-concat": "*"
   }
 }
