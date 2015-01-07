@@ -24,7 +24,7 @@ gulp.task('javascript', function() {
         .pipe(gulp.dest('public/js'))
 })
 
-gulp.task('minify', function() {
+gulp.task('minify', ['javascript'], function() {
     return gulp.src(['public/js/ngRoute.min.js' ,'public/js/loading-bar.min.js', 'public/js/mentio.min.js', 'public/js/web.js'])
         .pipe(concat('web.min.js'))
         .pipe(uglify())
@@ -32,7 +32,7 @@ gulp.task('minify', function() {
         .pipe(gulp.dest('public/js/'))
 })
 
-gulp.task('cssjoin', function() {
+gulp.task('cssjoin', ['css'], function() {
     return gulp.src(['public/css/web.css', 'public/css/loading-bar.min.css', 'public/css/fonts.css'])
         .pipe(concat('web.min.css'))
         .pipe(prefix(

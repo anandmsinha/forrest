@@ -3580,11 +3580,19 @@ body {
   text-transform: uppercase;
   letter-spacing: 0.1em;
 }
-.cb__quest {
-  border-bottom: 1px solid rgba(219, 230, 236, 0.5);
+.main__control__block--menu li a {
   display: block;
-  padding: 12px 25px 12px 15px;
-  color: #67747c;
+  padding: 5px 20px;
+  color: #777;
+  cursor: pointer;
+}
+.main__control__block--menu li a:hover,
+.main__control__block--menu li a:focus {
+  text-decoration: none;
+  background-color: #eee;
+}
+.main__control__block--menu li a.active {
+  border-left: 3px solid #dd4b39;
 }
 .main__qu_block {
   box-shadow: 0 0 1px 0 rgba(44, 54, 67, 0.1);

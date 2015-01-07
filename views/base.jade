@@ -81,7 +81,9 @@ html(lang="en", ng-app="mainForrestApp")
                         div(class="main__control__block")
                             div(class="cb__label")
                                 p All Quests ({{ quests.length }})
-                            a(ng-click="changeQuest($index)", class="cb__quest", style="cursor: pointer;", ng-repeat="quest in quests") {{ quest.name }}
+                            ul(class="main__control__block--menu list-unstyled")
+                                li(ng-repeat="quest in quests")
+                                    a(ng-click="changeQuest($index)", ng-class="{active: $index==defaultQuest}") {{ quest.name }}
                     div(class="col-md-10")
                         div(class="main__qu_block")
                             div(ng-if="appModes.createQuest")
