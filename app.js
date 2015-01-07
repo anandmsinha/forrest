@@ -13,12 +13,7 @@ var os = require('os')
 
 var env = 'production'
 var port_number = process.env.PORT || 3000;
-database_url = 'mongodb://forrest:admin@ds029821.mongolab.com:29821/forresterkikkola'
-
-if (os.hostname() == "anand-Ideapad-Z560") {
-    env = 'developement'
-    database_url = 'mongodb://localhost:27017/nodetest2'
-}
+database_url = process.env.DB_URL || 'mongodb://localhost:27017/nodetest2'
 
 var app = express()
 app.set('views', path.join(__dirname, 'views'))
