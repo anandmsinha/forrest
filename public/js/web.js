@@ -308,9 +308,11 @@
             }
           }
           for (k in tmpVal) {
-            $scope.allTags.push({
-              label: k
-            });
+            if (k !== 'untagged') {
+              $scope.allTags.push({
+                label: k
+              });
+            }
           }
           $scope.linksDataStructure = tmpVal;
         } else {
