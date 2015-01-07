@@ -20,6 +20,35 @@
     return output;
   });
 
+  app.directive('collapse', function() {
+    var output;
+    return output = {
+      restrict: 'A',
+      link: function(scope, element, attrs) {
+        var collapse, expand;
+        collapse = function() {
+          element.removeClass('in');
+          return element.css({
+            height: 0
+          });
+        };
+        expand = function() {
+          element.addClass('in');
+          return element.css({
+            height: 'auto'
+          });
+        };
+        return scope.$watch(attrs.collapse, function(shouldCollapse) {
+          if (shouldCollapse) {
+            return collapse();
+          } else {
+            return expand();
+          }
+        });
+      }
+    };
+  });
+
   app.filter('dateandtime', function() {
     return function(input) {
       return (new Date(input)).toLocaleString();
@@ -197,6 +226,7 @@
   app.controller('NavBarController', [
     '$scope', '$authService', '$appModes', '$location', function($scope, $authService, $appModes, $location) {
       $scope.user = $authService.getUser();
+      $scope.isCollapsed = true;
       $scope.initUser = function(text) {
         return $authService.changeUser(JSON.parse(text));
       };

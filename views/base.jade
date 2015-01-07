@@ -16,13 +16,13 @@ html(lang="en", ng-app="mainForrestApp")
         <base href="/">
         nav(class="navbar navbar-default navbar-forrest navbar-static-top", ng-controller="NavBarController", ng-init="initUser('#{user}')")
             div(class="container-fluid")
-                button(type="button", class="navbar-toggle collapsed", data-toggle="collapse", data-target="#main_navbar_collapse")
+                button(type="button", class="navbar-toggle collapsed", ng-click="isCollapsed = !isCollapsed" data-toggle="collapse", data-target="#main_navbar_collapse")
                     span(class="sr-only") Toggle navigation
                     span(class="icon-bar")
                     span(class="icon-bar")
                     span(class="icon-bar")
                 a(class='navbar-brand', ng-href='#/') Forrest
-                div(class="collapse navbar-collapse", id="main_navbar_collapse")
+                div(class="collapse navbar-collapse", collapse="isCollapsed", id="main_navbar_collapse")
                     ul(class="nav navbar-nav navbar-right", ng-if="!user.is_login")
                         li
                             a(href="#/register") Signup

@@ -10,4 +10,5 @@
 6. replace fonts with google fonts link in production. (create a gulp command make production ready)
 7. Upon quest creation send the user to its links page right now it is stuck in create quest page only.
 8. Extract text from a link option for user.
-9. Move database password to heroku enviorment.
+9. ~~Move database password to heroku enviorment.~~
+10. ~~Fix for bootstrap navbar on mobiles.~~
