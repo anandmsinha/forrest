@@ -1,6 +1,6 @@
 # forrest
 
-### Features left
+### Features
 
 1. Deep nesting in tags.
 2. Edit/Delete a link.
@@ -14,3 +14,6 @@
 10. ~~Fix for bootstrap navbar on mobiles.~~
 11. ~~Reflect which quest is currently open in left menu.~~
 12. Reset the add link form upon quest change.
+13. Method to search through links in a quest.
+14. Way to search in all quest.
+15. Once user goes to home page from board there is no way he can go back to board.
