@@ -147,7 +147,7 @@
           return $window.alert(message);
         });
       };
-      this.addQuest = function(quest_name) {
+      this.addQuest = function(quest_name, after_questadd) {
         var failedMessage;
         failedMessage = 'Failed to add request';
         return $http.post('/backend/quests', {
@@ -160,13 +160,16 @@
               to_push = data.quest[0];
             }
             quests.push(to_push);
+            after_questadd(true);
           } else {
             message = data.message || failedMessage;
+            after_questadd(false);
             return $window.alert(message);
           }
         }).error(function(data, status, headers, config) {
           var message;
           message = data.message || failedMessage;
+          after_questadd(false);
           return $window.alert(message);
         });
       };
@@ -326,8 +329,13 @@
       $scope.addLinkForm = {};
       uri_pattern = /\b((?:[a-z][\w-]+:(?:\/{1,3}|[a-z0-9%])|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}\/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))/ig;
       $scope.createQuest = function() {
-        $questService.addQuest($scope.createQuestForm.quest);
-        return $scope.createQuestForm.quest = '';
+        return $questService.addQuest($scope.createQuestForm.quest, function(response_status) {
+          if (response_status) {
+            $scope.createQuestForm.quest = '';
+            $scope.changeQuest($scope.quests.length - 1);
+            return $appModes.setCreateMode(false);
+          }
+        });
       };
       $scope.createLink = function(mainForm) {
         var failedMessage, link_object, linksInText;
