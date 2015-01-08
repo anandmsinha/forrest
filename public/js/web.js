@@ -78,10 +78,14 @@
   app.factory('$appModes', function() {
     var modes;
     modes = {
-      createQuest: false
+      createQuest: false,
+      showCreate: false
     };
     this.setCreateMode = function(val) {
       return modes.createQuest = val;
+    };
+    this.setShowCreate = function(val) {
+      return modes.showCreate = val;
     };
     this.getModes = function() {
       return modes;
@@ -227,14 +231,12 @@
     '$scope', '$authService', '$appModes', '$location', function($scope, $authService, $appModes, $location) {
       $scope.user = $authService.getUser();
       $scope.isCollapsed = true;
+      $scope.modes = $appModes.getModes();
       $scope.initUser = function(text) {
         return $authService.changeUser(JSON.parse(text));
       };
       return $scope.changeToQuestMode = function() {
-        $appModes.setCreateMode(true);
-        if ($location.path() !== '/board') {
-          return $location.path('/board');
-        }
+        return $appModes.setCreateMode(true);
       };
     }
   ]);
@@ -469,8 +471,13 @@
   ]);
 
   app.run([
-    '$rootScope', '$location', '$authService', function($rootScope, $location, $authService) {
+    '$rootScope', '$location', '$authService', '$appModes', function($rootScope, $location, $authService, $appModes) {
       $rootScope.$on('$routeChangeStart', function(event, next, current) {
+        if (next.originalPath === '/board') {
+          $appModes.setShowCreate(true);
+        } else {
+          $appModes.setShowCreate(false);
+        }
         if (next.$$route.config && next.$$route.config.authRequired) {
           if (!$authService.getUser().is_login) {
             return $location.path('/login');

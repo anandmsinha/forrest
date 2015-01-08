@@ -30,7 +30,9 @@ html(lang="en", ng-app="mainForrestApp")
                             a(ng-href="#/login") Login
                     ul(class="nav navbar-nav navbar-right", ng-if="user.is_login")
                         li
-                            a(ng-click="changeToQuestMode()", style="cursor: pointer;") Create Quest
+                            a(ng-href="#/board", ng-show="!modes.showCreate") Go to board
+                        li
+                            a(ng-click="changeToQuestMode()", ng-show="modes.showCreate", style="cursor: pointer;") Create Quest
                         li
                             a(href="#/logout") Logout
         <div ng-view></div>
