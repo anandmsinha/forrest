@@ -13,4 +13,4 @@
 9. ~~Move database password to heroku enviorment.~~
 10. ~~Fix for bootstrap navbar on mobiles.~~
 11. ~~Reflect which quest is currently open in left menu.~~
-12. Reset the form upon quest change.
+12. Reset the add link form upon quest change.
